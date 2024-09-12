@@ -33,4 +33,4 @@ jobs:
           # echo "${{ toJSON(github.event) }}"  # print shedloads of them
           echo "${{ toJSON(github.event.requested_team.name) }}"
           echo "${{ toJSON(github.event.action) }}"
-          echo "${{ toJSON(github.event.event_name) }}"
+          echo "${{ toJSON(github.event.event.name) }}"
