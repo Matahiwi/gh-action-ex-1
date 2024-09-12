@@ -1,9 +1,9 @@
 name: First Golang Workflow
-on: [ workflow_dispatch, push ]
+on: [ workflow_dispatch ]
 defaults:
   run:
     shell: bash
-    working-directory: Golang
+    working-directory: Golang/MyCode
 jobs:
   first-golang-job:
     runs-on: ubuntu-latest
