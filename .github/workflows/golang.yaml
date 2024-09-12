@@ -29,4 +29,4 @@ jobs:
       - name: Clean up and be gone
         run: make rm
       - name: Output event details
-        run: echo "${{ toJSON(github) }}"
+        run: echo "${{ toJSON(github.event) }}"
