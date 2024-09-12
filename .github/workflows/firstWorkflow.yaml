@@ -1,0 +1,15 @@
+name: First Workflow
+on: workflow_dispatc
+jobs:
+  first-job:
+    steps:
+      - name: Print Hello
+        run: echo "Hello World"
+      - name: Print Goodbye
+        run: echo "Goodbye Cruel World"
+      - name: Run multiple commands
+        run: |
+          echo "Ive Been downhearted"
+          echo "Ever since the day we met"
+          ls -l /etc
+          go version
