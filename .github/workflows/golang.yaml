@@ -5,7 +5,7 @@ defaults:
     shell: bash
     working-directory: Golang/MyCode
 jobs:
-  first-golang-job:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Download code from the repo to the runner
@@ -14,13 +14,31 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.21
+      - name: Format the code in preparation for testing
+        run: make format
       - name: Run the Tests on functions in the Code
         run: make test
-      - name: Build the Binary
-        run: make build
-      - name: Run the binary with make run main.go
+      - name: Run the binary 
         run: make run
-      - name: run the binary directly then delete it
+      - name: Clean up and begone
+        run: make rm
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download code from the repo to the runner
+        uses: actions/checkout@v3
+      - name: Install Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      - name: Format code
+        run: make format
+      - name: Buld and run the Binary
         run: |
+          make build
           make run_binary
-          make rm
+      - name: Mock Deployment of the code
+        run: echo "Deploying code Not..."
+      - name: Clean up and be gone
+        run: make rm
