@@ -29,4 +29,8 @@ jobs:
       - name: Clean up and be gone
         run: make rm
       - name: Output event details
-        run: echo "${{ toJSON(github.event) }}"
+        run: |
+          # echo "${{ toJSON(github.event) }}"  # print shedloads of them
+          echo "${{ toJSON(github.event.requested_team.name) }}"
+          echo "${{ toJSON(github.event.action) }}"
+          echo "${{ toJSON(github.event.event_name) }}"
