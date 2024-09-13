@@ -7,7 +7,6 @@ on:
 
 jobs:
   HelloWorld:
-    if: inputs.Action == 'plan' && inputs.Environment == 'Production'
     runs-on: ubuntu-latest
     steps:
       - name: Print out inputs
