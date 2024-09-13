@@ -1,65 +1,14 @@
 name: IAM Role and Policy
 on:
-  workflow_dispatch:
-    inputs:
-      Action:
-        type: choice
-        description: 'Terraform action to perform'
-        required: true
-        options:
-          - plan
-          - apply
-
-      Environment:
-        type: choice
-        description: 'Environment to deploy to'
-        required: true
-        options:
-          - Production
-          - Test
-
-      StringPath:
-        type: string
-        description: 'Enter a string path'
-        required: true
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
-  PlanProduction:
+  HelloWorld:
     if: inputs.Action == 'plan' && inputs.Environment == 'Production'
     runs-on: ubuntu-latest
     steps:
       - name: Print out inputs
-        run: |
-          echo "Action  ${{inputs.Action}}"
-          echo "Environment  ${{inputs.Environment}}"
-          echo "StringPath  ${{inputs.StringPath}}"
-
-  PlanTest:
-    if: inputs.Action == 'plan' && inputs.Environment == 'Test'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print out inputs
-        run: |
-          echo "Action  ${{inputs.Action}}"
-          echo "Environment  ${{inputs.Environment}}"
-          echo "StringPath  ${{inputs.StringPath}}"
-
-  ApplyProduction:
-    if: inputs.Action == 'apply' && inputs.Environment == 'Production'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print out inputs
-        run: |
-          echo "Action  ${{inputs.Action}}"
-          echo "Environment  ${{inputs.Environment}}"
-          echo "StringVar  ${{inputs.StringPath}}"
-
-  ApplyTest:
-    if: inputs.Action == 'apply' && inputs.Environment == 'Test'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print out inputs
-        run: |
-          echo "Action  ${{inputs.Action}}"
-          echo "Environment  ${{inputs.Environment}}"
-          echo "StringVar  ${{inputs.StringPath}}"
+        run: echo "Running Hello World"
