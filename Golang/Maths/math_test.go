@@ -12,7 +12,7 @@ func TestFactorial(t *testing.T) {
 
 func TestAddtorial(t *testing.T) {
 	x := Addtorial(4)
-	if x != 10 { 
+	if x != 10 {
 		t.Error("Expected:", 10, "Got", x)
 	}
 }

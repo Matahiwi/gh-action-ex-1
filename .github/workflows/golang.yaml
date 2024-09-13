@@ -1,13 +1,18 @@
 name: IAM Role and Policy
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - 'releases/**'
   push:
     branches:
-      - main
+      - 'main'
+      - 'releases/**'
 
 jobs:
   HelloWorld:
-    if: inputs.Action == 'plan' && inputs.Environment == 'Production'
     runs-on: ubuntu-latest
     steps:
       - name: Print out inputs
