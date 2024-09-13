@@ -16,5 +16,5 @@ jobs:
           make format
       - name: Event Conditional
         run: |
-          echo "$RUNNER_OS""
+          echo "$RUNNER_OS"
           echo "$env"
