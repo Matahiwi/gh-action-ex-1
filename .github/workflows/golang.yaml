@@ -11,7 +11,9 @@ jobs:
         with:
           go-version: 1.21
       - name: Format the code in preparation for testing
-        run: make format
+        run: |
+          cd Golang
+          make format
       - name: Event Conditional
         run: |
           echo "$RUNNER_OS""
