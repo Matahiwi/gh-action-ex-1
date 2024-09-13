@@ -1,9 +1,15 @@
 name: IAM Role and Policy
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - 'releases/**'
   push:
     branches:
-      - main
+      - 'main'
+      - 'releases/**'
 
 jobs:
   HelloWorld:
