@@ -1,9 +1,5 @@
 name: First Golang Workflow
 on: [ workflow_dispatch ]
-defaults:
-  run:
-    shell: bash
-    working-directory: Golang/MyCode
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,9 +12,7 @@ jobs:
           go-version: 1.21
       - name: Format the code in preparation for testing
         run: make format
-      - name: Output event details
+      - name: Event Conditional
         run: |
-          #echo "${{ toJSON(github.event) }}"  # print shedloads of them
-          #echo "${{ toJSON(github.event.requested_team.name) }}"
-          #echo "${{ toJSON(github.event.action) }}"
-          echo "${{ toJSON(github.event.repository.name) }}"
+          echo "$RUNNER_OS""
+          echo "$env"
