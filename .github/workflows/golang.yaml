@@ -11,10 +11,13 @@ jobs:
           PWD=$(pwd)
           echo "Current Directory: $PWD"
           cd Golang
+          echo $PATH
           PWD=$(pwd)
           echo "Current Directory: $PWD"
-          PATH=$(path)
-          echo $PATH
+          cd
+          PWD=$(pwd)
+          echo "Current Directory: $PWD"
+
       - name: Event Conditional
         run: |
           echo "$RUNNER_OS"
