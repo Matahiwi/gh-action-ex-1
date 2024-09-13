@@ -19,4 +19,6 @@ jobs:
       - name: Event Conditional
         run: |
           echo "$RUNNER_OS"
-          echo "$env"
+          echo "$env:RUNNER_OS"
+          echo "$GITHUB_PATH"
+          echo "$GITHUB_WORKSPACE"
