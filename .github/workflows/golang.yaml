@@ -15,4 +15,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print out inputs
-        run: echo "Running Hello World"
+        run: echo "Running Hello World from delete"
