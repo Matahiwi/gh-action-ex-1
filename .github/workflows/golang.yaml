@@ -19,6 +19,6 @@ jobs:
       - name: Event Conditional
         run: |
           echo "$RUNNER_OS"
-          echo "$env:RUNNER_OS"
-          echo "$GITHUB_PATH"
-          echo "$GITHUB_WORKSPACE"
+          echo "PATH: $GITHUB_PATH"
+          echo "User path: {PATH}"
+          echo "Runner user is: $RUNNER_USER"
