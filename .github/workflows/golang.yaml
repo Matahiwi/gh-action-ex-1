@@ -1,9 +1,3 @@
-
-defaults:
-  run:
-    shell: bash
-    working-directory: Golang
-
 name: golang build and upload
 on:
   workflow_dispatch:
@@ -24,33 +18,11 @@ jobs:
           DIR=$(ls -l)
           echo ${DIR}
       - name: build the binary in bin/mymaths
-        run: make build
+        run: |
+          make build
+          ls -lR bin/
       - name: upload the entire directory
         uses: actions/upload-artifact@v3
         with:
           name: mymaths-bin-artifact
           path: bin/*
-  run_build:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the Repo
-        uses: actions/checkout@v3
-      - name: Install Golang
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.21
-      - name: Change into Golang directory
-        run: mkdir Artifacts
-      - name: Download Artifacts
-        uses: actions/download-artifacts@v3
-        with:
-          name: mymaths-bin-artifact
-          path: ./Artifacts/
-      - name: view and run the compiled binary
-        run: |
-          cd ./Artifacts
-          ls -lR
-          chmod a+x mymaths
-          ./mymaths
-
