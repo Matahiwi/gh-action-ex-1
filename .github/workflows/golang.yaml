@@ -1,3 +1,9 @@
+
+defaults:
+  run:
+    shell: bash
+    working-directory: Golang
+
 name: golang build and upload
 on:
   workflow_dispatch:
@@ -11,8 +17,12 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.21
-      - name: Change into Golang directory
-        run: cd Golang
+      - name: Check location and directory contents
+        run: |
+          PWD=$(pwd)
+          echo ${PWD}
+          DIR=$(ls -l)
+          echo ${DIR}
       - name: build the binary in bin/mymaths
         run: make build
       - name: upload the entire directory
@@ -31,9 +41,7 @@ jobs:
         with:
           go-version: 1.21
       - name: Change into Golang directory
-        run: |
-          cd Golang
-          mkdir Artifacts
+        run: mkdir Artifacts
       - name: Download Artifacts
         uses: actions/download-artifacts@v3
         with:
