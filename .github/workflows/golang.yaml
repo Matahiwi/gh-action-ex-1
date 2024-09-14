@@ -1,18 +1,48 @@
-name: IAM Role and Policy
+name: golang build and upload
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-    branches:
-      - 'releases/**'
-  push:
-    branches:
-      - 'releases/**'
-
+  workflow_dispatch:
 jobs:
-  HelloWorld:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print out inputs
-        run: echo "Running Hello World"
+      - name: Checkout the Repo
+        uses: actions/checkout@v3
+      - name: Install Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      - name: Change into Golang directory
+        run: cd Golang
+      - name: build the binary in bin/mymaths
+        run: make build
+      - name: upload the entire directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: mymaths-bin-artifact
+          path: bin/*
+  run_build:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Repo
+        uses: actions/checkout@v3
+      - name: Install Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      - name: Change into Golang directory
+        run: |
+          cd Golang
+          mkdir Artifacts
+      - name: Download Artifacts
+        uses: actions/download-artifacts@v3
+        with:
+          name: mymaths-bin-artifact
+          path: ./Artifacts/
+      - name: view and run the compiled binary
+        run: |
+          cd ./Artifacts
+          ls -lR
+          chmod a+x mymaths
+          ./mymaths
+
