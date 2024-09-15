@@ -15,7 +15,9 @@ jobs:
   use_output:
     needs: create_output
     runs-on: ubuntu-latest
+    env:
+      create_output_var: ${{ needs.create_output.random_output_variable  }}
     steps:
       - name: Do something
-        run: echo "Hello World"
+        run: echo "Variable carried over $create_output_var"
 
