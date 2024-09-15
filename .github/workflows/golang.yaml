@@ -1,11 +1,20 @@
-name: Environment Variable Demonstration
+name: Dickaround with Outputs
 on: workflow_dispatch
 jobs:
-  terraform_plan:
+  create_output_job:
     runs-on: ubuntu-latest
-    env:
-      var_IAM: "arn:aws:iam::969296761654:role/IAMRole"
+    # Map a step output to a job output
+    outputs:
+      output_var: ${{ steps.first_step.outputs.first_var }} # steps and output are reserved words
     steps:
-      - name: Assume the appropriate IAM Role
-        run: |
-          echo "Role is ${{ env.var_IAM }}"
+      - id: first_step                                        # handle used to dig down into the variable
+        run: echo "first_var=hello world" >> "$GITHUB_OUTPUT" # dumps string into the output variable called hello_var
+
+  display_output_job:
+    runs-on: ubuntu-latest
+    needs: create_output_job  # must run after that job to get the output variable
+    env:
+      env_var: ${{needs.create_output_job.outputs.first_var}}
+    steps:
+      - name: echo out the environment variabl
+        run: echo "Environment variable is ${{env.env_var}}"
