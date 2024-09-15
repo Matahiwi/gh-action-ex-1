@@ -25,7 +25,7 @@ jobs:
         env:
           output_env_var1: ${{needs.create_output_job.outputs.output_hello_var}} # output and needs are reserved words
           output_env_var2: ${{needs.create_output_job.outputs.output_bye_var}}   # output and needs are reserved words
-        run: echo "$output_env_var1 and $output_env_var2"
+        run: echo ""
 
       - name: echo out the environment variables
-        run: echo "Hello World"
+        run: echo "Hello World variables are $output_env_var1 and $output_env_var2"
