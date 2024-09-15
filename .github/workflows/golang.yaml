@@ -11,14 +11,3 @@ jobs:
         run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
       - name: Using the random-number generated in this job
         run: echo "The value of the random number is ${{ steps.random_step.outputs.random-number }}"
-
-  use_output:
-    needs: create_output
-    runs-on: ubuntu-latest
-    env:
-      random_var: ${{needs.create_output.outputs.random_output_variable}}
-      steps:
-        - name: Directly access and echo the output variables
-          run: echo "Random Number is ${{needs.create_output.outputs.random_output_variable}}
-        - name: Access variables as defined in this job
-          run: echo "Indirect output is ${{random_variable}}"
