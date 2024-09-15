@@ -1,31 +1,11 @@
-name: Dickaround with Outputs
+name: Environment Variable Demonstration
 on: workflow_dispatch
 jobs:
-  create_output_job:
+  terraform_plan:
     runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      output_hello_var: ${{ steps.hello_step.outputs.hello_var }} # steps and output are reserved words
-      output_bye_var:   ${{ steps.goodbye_step.outputs.bye_var }} # steps and output are reserved words
+    env:
+      var_IAM: "arn:aws:iam::969296761654:role/IAMRole"
     steps:
-      - id: hello_step                                  # handle used to dig down into the output below
-        run: echo "hello_var=hello" >> "$GITHUB_OUTPUT" # dumps string into the output variable called hello_var
-
-      - id: goodbye_step                                # handle used to dig down into the output below
-        run: echo "bye_var=Ciaou" >> "$GITHUB_OUTPUT"   # dumps string into the output variable called bye_var
-
-      - name: Lets print the 2 variables within the same job they are generated in
-        run: echo "${{steps.hello_step.outputs.hello_var}} and ${{steps.goodbye_step.outputs.bye_var}}"
-
-  display_output_job:
-    runs-on: ubuntu-latest
-    needs: create_output_job  # must run after that job to get the output variable
-    steps:
-      - name: set up the environment and echo the variables at this 
-        env:
-          output_env_var1: ${{needs.create_output_job.outputs.output_hello_var}} # output and needs are reserved words
-          output_env_var2: ${{needs.create_output_job.outputs.output_bye_var}}   # output and needs are reserved words
-        run: echo "$output_env_var1 and $output_env_var2"
-
-      - name: echo out the environment variables
-        run: echo "Hello World variables are $output_env_var1 and $output_env_var2"
+      - name: Assume the appropriate IAM Role
+        run: |
+          echo "Role is ${{ env.var_IAM }}"
