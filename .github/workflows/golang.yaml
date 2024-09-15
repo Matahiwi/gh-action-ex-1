@@ -11,6 +11,7 @@ jobs:
         run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT # dumps string into the output variable called random_number
       - name: Using the random-number variable generated in this job
         run: echo "The value is ${{ steps.random_step.outputs.random-number }}"  # how we access the output in the job it was generated in
+        run: echo ${{random_output_var}}
 
   use_output_job:
     needs: create_output_job
