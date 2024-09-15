@@ -13,7 +13,9 @@ jobs:
         run: echo "first_var=hello world" >> "$GITHUB_OUTPUT" # dumps string into the output variable called hello_var
 
       - name: output value generated
-        run: echo "Value is ${{steps.first_step.outputs.first_var}}"
+        run: |
+          echo "Value is ${{steps.first_step.outputs.first_var}}"
+          echo "The value of the first_env_var is ${{env.first_env_var}}"
 
   display_output_job:
     runs-on: ubuntu-latest
