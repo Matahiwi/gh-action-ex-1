@@ -13,3 +13,16 @@ jobs:
         run: echo "bye_var=Goodbye Cruel World" >> "$GITHUB_OUTPUT"
       - name: Print out the 2 variables
         run: echo "${{steps.hello.outputs.hello_var}} and ${{steps.bye.outputs.bye_var}}"
+
+  show_output:
+    runs-on: ubuntu-latest
+    needs: create_output
+    steps:
+      - name: define the variables as environment variables
+        env: 
+          hello_var: ${{needs.create_output.outputs.hello_var}}
+          bye_var: ${{needs.create_output.outputs.bye_var}}
+      - name: output the environment variables
+        run: echo "$hello_var and $bye_var"
+
+
