@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: create_output_job  # must run after that job to get the output variable
     steps:
-      - name: set up the environment
+      - name: set up the environment and echo the variables at this 
         env:
           output_env_var1: ${{needs.create_output_job.outputs.output_hello_var}} # output and needs are reserved words
           output_env_var2: ${{needs.create_output_job.outputs.output_bye_var}}   # output and needs are reserved words
-        run: echo ""
+        run: echo "$output_env_var1 and $output_env_var2"
 
       - name: echo out the environment variables
         run: echo "Hello World variables are $output_env_var1 and $output_env_var2"
