@@ -11,7 +11,7 @@ jobs:
         run: echo "first_var=hello world" >> "$GITHUB_OUTPUT" # dumps string into the output variable called hello_var
 
       - name: output value generated
-        run: echo "Value is $first_var"
+        run: echo "Value is ${{first_var}}"
 
   display_output_job:
     runs-on: ubuntu-latest
