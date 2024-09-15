@@ -1,28 +1,24 @@
-name: golang build and upload
-on:
-  workflow_dispatch:
+name: Simple Output Workflow
+on: workflow_dispatch
 jobs:
-  build:
+  create_output:
     runs-on: ubuntu-latest
+    outputs:
+      random_output_variable: ${{ steps.random_step.random-number }}
     steps:
-      - name: Checkout the Repo
-        uses: actions/checkout@v3
-      - name: Install Golang
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.21
-      - name: Check location and directory contents
-        run: |
-          PWD=$(pwd)
-          echo ${PWD}
-          DIR=$(ls -l)
-          echo ${DIR}
-      - name: build the binary in bin/mymaths
-        run: |
-          make build
-          ls -lR bin/
-      - name: upload the entire directory
-        uses: actions/upload-artifact@v3
-        with:
-          name: mymaths-bin-artifact
-          path: bin/*
+      - name: Generate a random number to use as output
+        id: random_step
+        run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      - name: Using the random-number generated in this job
+        run: echo "The value of the random number is ${{ steps.random_step.outputs.random-number }}"
+
+  use_output:
+    needs: create_output
+    runs-on: ubuntu-latest
+    env:
+      random_var: ${{needs.create_output.outputs.random_output_variable}}
+      steps:
+        - name: Directly access and echo the output variables
+          run: echo "Random Number is ${{needs.create_output.outputs.random_output_variable}}
+        - name: Access variables as defined in this job
+          run: echo "Indirect output is ${{random_variable}}"
