@@ -1,25 +1,25 @@
-name: simple_output_workflow
+name: Simple Output Workflow
 on: workflow_dispatch
 jobs:
-  create_output:
+  create_output_job:
     runs-on: ubuntu-latest
     outputs:
-      random_output_variable: ${{ steps.random_step.random-number }}
+      random_output_var: ${{ steps.random_step.outputs.random-number }}    # steps and output are reserved words
     steps:
-      - name: Generate a random number to use as output
-        id: random_step
-        run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      - name: Using the random-number generated in this job
-        run: echo "The value of the random number is ${{ steps.random_step.outputs.random-number }}"
+      - name: Generate random number to use as output
+        id: random_step                                             # handle used to dig down into the output below
+        run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT # dumps string into the output variable called random_number
+      - name: Using the random-number variable generated in this job
+        run: echo "The value is ${{ steps.random_step.outputs.random-number }}"  # how we access the output in the job it was generated in
 
-  use_output:
-    needs: create_output
+  use_output_job:
+    needs: create_output_job
     runs-on: ubuntu-latest
     env:
-      create_output_var: ${{ needs.create_output.random_output_variable  }}
+      random_var: ${{ needs.create_output_job.outputs.random_output_var }}
     steps:
-      - name: first cut echo variable
-        run: echo "Variable carried over $create_output_var"
-      - name: second cut echo variable directly
-        run: echo "Variable carried over ${{ needs.create_output.random_output_variable  }}"
+      - name: Directly access and echo output variable
+        run: echo "Random number is ${{ needs.create_output_job.outputs.random_output_var }}"
+      - name: Access output variable via env vars
+        run: echo "Output Var is $random_var"
 
