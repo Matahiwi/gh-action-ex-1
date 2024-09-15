@@ -19,6 +19,8 @@ jobs:
     needs: create_output
     steps:
       - name: define the variables as environment variables
-        run: echo "Running step 2"
+        env:
+          hello_var: ${{needs.create_output.outputs.hello_var}}
+          bye_var: ${{needs.create_output.outputs.bye_var}}
 
 
