@@ -10,6 +10,6 @@ jobs:
       - id: hello
         run: echo "hello_var=Hello World" >> "$GITHUB_OUTPUT"
       - id: bye
-        run: echo "bye_var=Goodbye Cruel World: >> "$GITHUB_OUTPUT"
+        run: echo "bye_var=Goodbye Cruel World" >> "$GITHUB_OUTPUT"
       - name: Print out the 2 variables
         run: echo "${{steps.hello.outputs.hello_var}} and ${{steps.bye.outputs.bye_var}}"
