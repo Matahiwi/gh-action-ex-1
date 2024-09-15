@@ -1,4 +1,4 @@
-name: Simple Output Workflow
+name: simple_output_workflow
 on: workflow_dispatch
 jobs:
   create_output:
