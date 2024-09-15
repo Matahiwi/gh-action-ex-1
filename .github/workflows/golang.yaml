@@ -20,7 +20,10 @@ jobs:
     steps:
       - name: define the variables as environment variables
         env:
-          hello_var: ${{needs.create_output.outputs.hello_var}}
-          bye_var: ${{needs.create_output.outputs.bye_var}}
+          hello_var: ${{ needs.create_outputs.outputs.hello_var }}
+          bye_var: ${{needs.create_outputs.outputs.bye_var}}
+
+      - name: output the environment variables
+        run: echo "$hello_var and $bye_var"
 
 
