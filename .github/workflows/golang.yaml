@@ -5,10 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
-      output_var: ${{ steps.first_step.outputs.first_var }} # steps and output are reserved words
+      first_var: ${{ steps.first_step.outputs.first_var }} # steps and output are reserved words
     steps:
       - id: first_step                                        # handle used to dig down into the variable
         run: echo "first_var=hello world" >> "$GITHUB_OUTPUT" # dumps string into the output variable called hello_var
+
+      - name: output value generated
+        run: echo "Value is $first_var"
 
   display_output_job:
     runs-on: ubuntu-latest
