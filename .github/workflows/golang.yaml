@@ -11,8 +11,6 @@ jobs:
         run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
       - name: Using the random-number generated in this job
         run: echo "The value of the random number is ${{ steps.random_step.outputs.random-number }}"
-      - name: access the random number within the flow
-        run: echo "The random number is $random_output_variable"
 
   use_output:
     needs: create_output
