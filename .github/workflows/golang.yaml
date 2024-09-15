@@ -3,6 +3,8 @@ on: workflow_dispatch
 jobs:
   create_output_job:
     runs-on: ubuntu-latest
+    env:
+      first_env_var: ${{ steps.first_step.outputs.first_var}}
     # Map a step output to a job output
     outputs:
       first_var: ${{ steps.first_step.outputs.first_var }} # steps and output are reserved words
