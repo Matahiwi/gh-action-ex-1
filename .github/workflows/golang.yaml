@@ -1,21 +1,23 @@
-name: matrix example
+name: iam matrix example
 on: workflow_dispatch
 jobs:
   setup_job:
     continue-on-error: true
     strategy: 
       matrix:
-        environment: [ prod, terraform ]
-    defaults:
-      run:
-        working-directory: ${{ matrix.environment }}
+        environment: [ 650454640207, 191213556404 ]
+        #environment: [dev , primary ]
     runs-on: ubuntu-latest
+
     steps:
-      - name: Download the Repo
+      - name: Clone the Repo
         uses: actions/checkout@v4
-      - name: cd into the correct directory and run ls to confirm your in it
+
+      - name: Run some commands
         run: |
-          echo "The environment is: ${{ matrix.environment }}"
+          if [ "${{ matrix.environment }}" == "191213556404" ]; then cd prod; else cd terraform ;fi
           echo $(pwd)
-          echo $(ls)
+          echo "The environment is: ${{ matrix.environment }}"
+          export role_arn="arn:aws:iam::"${{ matrix.environment }}":role/DevopsDroneRole"
+          echo "The role arn is: $role_arn"
 
