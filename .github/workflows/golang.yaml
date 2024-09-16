@@ -23,5 +23,5 @@ jobs:
       find_var: ${{needs.create_output_job.outputs.output_var}}
     steps:
       - name: print out environment variable
-        run: echo "Directory is $env.find"
+        run: echo "Directory is ${{env.find_var}}"
 
