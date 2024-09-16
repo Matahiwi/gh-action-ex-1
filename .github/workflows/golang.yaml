@@ -15,3 +15,13 @@ jobs:
 
       - name: Print the find variable locally
         run: echo "${{steps.test_file_step.outputs.find_var}}"
+
+  display_output_job:
+    runs-on: ubuntu-latest
+    needs: create_output_job
+    env:
+      find_var: ${{needs.create_output_job.outputs.output_var}}
+    steps:
+      - name: print out environment variable
+        run: echo "Directory is $env.find"
+
