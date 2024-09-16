@@ -14,8 +14,6 @@ jobs:
 
       - name: Run some commands
         run: |
-          echo "Clone outcome: ${{steps.Clone.outcome}}"
-          echo "Clone status: ${{steps.Clone.status}}"
-          echo "ls -l outcome: ${{steps.Commands.outcome}}"
-          echo "ls -l status: ${{steps.Commands.status}}"
-
+          outcomeEmoji() { case "$1" in 'success') echo '✅';; 'failure') echo '❌';; *) echo '❓';; esac; }
+          echo "Clone outcome: ${{steps.Clone.outcome}} - $(outcomeEmoji '${{ steps.Clone.outcome }}') Clone Step"
+          echo "ls -l outcome: ${{steps.Commands.outcome}} - $(outcomeEmoji '${{ steps.Commands.outcome }}') Command Step"
