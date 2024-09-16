@@ -1,27 +1,28 @@
-name: Grabbing output from a find command run within the repo and capturing it to a variable then passing it down the chain
+name: jq example
 on: workflow_dispatch
 jobs:
   create_output_job:
     runs-on: ubuntu-latest
     outputs:
-      output_var: ${{ steps.test_file_step.outputs.find_var }}
+      matrix: ${{ steps.matrix.outputs.matrix_value }}
     steps:
       - name: Download the Golang repo
         uses: actions/checkout@v3
 
-      - name: Run the find command and grab list of outputs
-        id: test_file_step
-        run: find Maths/*_test.go -type f -execdir echo 'find_var={}'  >> $GITHUB_OUTPUT ';' 
+      - name: Run the ls command to build up a slice of directories
+        id: matrix
+        run: echo "matrix_value=$( ls . |jq -R -s -c 'split("\n")[:-1]')" >> "$GITHUB_OUTPUT"
 
-      - name: Print the find variable locally
-        run: echo "${{steps.test_file_step.outputs.find_var}}"
+      - name: Print Locally
+        run: echo "${{ steps.matrix.outputs.matrix_value }}"
+
 
   display_output_job:
     runs-on: ubuntu-latest
-    needs: create_output_job
+    needs: [ create_output_job ]
     env:
-      find_var: ${{needs.create_output_job.outputs.output_var}}
+      matrix_var: ${{ needs.create_output_job.outputs.matrix }}
     steps:
       - name: print out environment variable
-        run: echo "Directory is ${{env.find_var}}"
+        run: echo "Directory is ${{ env.matrix_var }}"
 
