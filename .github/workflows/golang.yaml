@@ -16,3 +16,12 @@ jobs:
         run: echo "${{env.greeting}} the pet is ${{env.dog}} with the owner ${{env.owner}}"
         env:
           owner: "Donald Duck"
+  cat_job:
+    runs-on: ubuntu-latest
+    env:
+      greetings: "Meow Kitty"
+    steps:
+      - name: The first Cat Step
+        run: echo "${{env.greeting}} the pet is ${{env.cat}} with the owner ${{env.owner}}"
+        env:
+          owner: "Cat Stevens"
