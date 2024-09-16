@@ -6,6 +6,9 @@ jobs:
     strategy: 
       matrix:
         environment: [ prod, terraform ]
+    defaults:
+      run:
+        working-directory: ${{ matrix.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Download the Repo
@@ -13,9 +16,6 @@ jobs:
       - name: cd into the correct directory and run ls to confirm your in it
         run: |
           echo "The environment is: ${{ matrix.environment }}"
-          echo $(pwd)
-          echo $(ls)
-          cd ${{matrix.envrionment}}
           echo $(pwd)
           echo $(ls)
 
