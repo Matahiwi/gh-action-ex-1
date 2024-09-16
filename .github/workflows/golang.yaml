@@ -1,27 +1,17 @@
-name: Play with variables
-
+name: Grabbing output from a find command run within the repo and capturing it to a variable then passing it down the chain
 on: workflow_dispatch
-
-env:
-  dog: "Bowzer the Dog"
-  cat: "Lottie the Kat"
-
 jobs:
-  dog_job:
+  create_output_job:
     runs-on: ubuntu-latest
-    env:
-      greeting: "Woof Woof Doggy"
+    outputs:
+      output_var: ${{ steps.test_file_step.outputs.find_var }}
     steps:
-      - name: The first Dog Step
-        run: echo "${{env.greeting}} the pet is ${{env.dog}} with the owner ${{env.owner}}"
-        env:
-          owner: "Donald Duck"
-  cat_job:
-    runs-on: ubuntu-latest
-    env:
-      greetings: "Meow Kitty"
-    steps:
-      - name: The first Cat Step
-        run: echo "${{env.greeting}} the pet is ${{env.cat}} with the owner ${{env.owner}}"
-        env:
-          owner: "Cat Stevens"
+      - name: Download the Golang repo
+        uses: actions/checkout@v3
+
+      - name: Run the find command and grab list of outputs
+        id: test_file_step
+        run: find Maths/*_test.go -type f -execdir echo 'find_var={}'  >> $GITHUB_OUTPUT ';' 
+
+      - name: Print the find variable locally
+        echo "${{steps.test_file_step.outputs.find_var}}"
