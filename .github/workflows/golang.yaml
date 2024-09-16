@@ -2,22 +2,20 @@ name: iam matrix example
 on: workflow_dispatch
 jobs:
   setup_job:
-    continue-on-error: true
-    strategy: 
-      matrix:
-        environment: [ 650454640207, 191213556404 ]
-        #environment: [dev , primary ]
     runs-on: ubuntu-latest
-
     steps:
       - name: Clone the Repo
+        id: Clone
         uses: actions/checkout@v4
+
+      - name: Run Some Commands
+        id: Commands
+        run: echo $(ls -l)
 
       - name: Run some commands
         run: |
-          if [ "${{ matrix.environment }}" == "191213556404" ]; then cd prod; else cd terraform ;fi
-          echo $(pwd)
-          echo "The environment is: ${{ matrix.environment }}"
-          export role_arn="arn:aws:iam::"${{ matrix.environment }}":role/DevopsDroneRole"
-          echo "The role arn is: $role_arn"
+          echo "Clone outcome: ${{steps.Clone.outcome}}"
+          echo "Clone status: ${{steps.Clone.status}}"
+          echo "ls -l outcome: ${{steps.Commands.outcome}}"
+          echo "ls -l status: ${{steps.Commands.status}}"
 
