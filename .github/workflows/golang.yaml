@@ -1,4 +1,4 @@
-name: iam matrix example
+name: step status example
 on: workflow_dispatch
 jobs:
   setup_job:
@@ -8,18 +8,19 @@ jobs:
         id: Clone
         uses: actions/checkout@v4
 
-      - name: Run Some Commands
+      - name: Run the ls commandS
         id: Commands
         run: echo $(ls -l)
 
-      - name: Run some commands
+      - name: Output based on the outcome of each step above
         run: |
           outcomeEmoji() { case "$1" in 'success') echo '✅';; 'failure') echo '❌';; *) echo '❓';; esac; }
           echo "Clone outcome: ${{steps.Clone.outcome}} - $(outcomeEmoji '${{ steps.Clone.outcome }}') Clone Step"
           echo "ls -l outcome: ${{steps.Commands.outcome}} - $(outcomeEmoji '${{ steps.Commands.outcome }}') Command Step"
 
           cat << EOL >> $GITHUB_STEP_SUMMARY
-          # ${{ vars.WORKING_DIRECTORY }}/${{ matrix.module }}
+          Push outcome material which into the GITHUB_STEP_SUMMARY
           $(outcomeEmoji '${{ steps.Clone.outcome }}') Clone Step
           $(outcomeEmoji '${{ steps.Commands.outcome }}') Command Step
+          Happy Days, Happy Coding
           EOL
