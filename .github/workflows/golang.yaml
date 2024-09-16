@@ -14,4 +14,4 @@ jobs:
         run: find Maths/*_test.go -type f -execdir echo 'find_var={}'  >> $GITHUB_OUTPUT ';' 
 
       - name: Print the find variable locally
-        echo: "${{steps.test_file_step.outputs.find_var}}"
+        run: echo "${{steps.test_file_step.outputs.find_var}}"
