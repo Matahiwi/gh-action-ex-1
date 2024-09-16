@@ -1,33 +1,21 @@
-name: jq example
+name: matrix example
 on: workflow_dispatch
 jobs:
   setup_job:
+    continue-on-error: true
+    strategy: 
+      matrix:
+        environment: [ prod, terraform ]
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.matrix_value }}
     steps:
-      - name: Download the repo
-        uses: actions/checkout@v3
-
-      - name: Run the ls command to build up a slice of directories
-        id: matrix
-        run: echo "matrix_value=$(ls tools |jq -R -s -c 'split("\n")[:-1]')" >> "$GITHUB_OUTPUT" 
-
-      - name: Print Locally
-        run: echo "${{ steps.matrix.outputs.matrix_value }}"
-
-
-  display_output_job:
-    runs-on: ubuntu-latest
-    needs: [ setup_job ]
-    strategy:
-      matrix: 
-        value: ${{ fromJson(needs.setup_job.outputs.matrix) }}
-    steps:
-      - name: Download Repo
-        uses: actions/checkout@v3
-      - name: Check out the Directory tools/${{ matrix.value}}
+      - name: Download the Repo
+        uses: actions/checkout@v4
+      - name: cd into the correct directory and run ls to confirm your in it
         run: |
-          echo "Dealing with directory tools/${{ matrix.value}}"
-          echo $(ls tools/${{ matrix.value}})
+          echo "The environment is: ${{ matrix.environment }}
+          echo $(pwd)
+          echo $(ls)
+          cd ${{matrix.envrionment}}
+          echo $(pwd)
+          echo $(ls)
 
