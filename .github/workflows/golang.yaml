@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: cd into the correct directory and run ls to confirm your in it
         run: |
-          echo "The environment is: ${{ matrix.environment }}
+          echo "The environment is: ${{ matrix.environment }}"
           echo $(pwd)
           echo $(ls)
           cd ${{matrix.envrionment}}
