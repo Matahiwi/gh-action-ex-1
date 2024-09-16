@@ -1,10 +1,12 @@
 name: Play with variables
-on: workflow_dispatch
-jobs:
-  env:
-    dog: "Bowzer the Dog"
-    cat: "Lottie the Kat"
 
+on: workflow_dispatch
+
+env:
+  dog: "Bowzer the Dog"
+  cat: "Lottie the Kat"
+
+jobs:
   dog_job:
     runs-on: ubuntu-latest
     env:
