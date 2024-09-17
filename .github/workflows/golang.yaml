@@ -1,26 +1,27 @@
-name: step status example
+name: env variables example
 on: workflow_dispatch
+env:
+  dog: "Bowzer the Dog"
+  cat: "Black Panther"
 jobs:
-  setup_job:
+  dog_job:
     runs-on: ubuntu-latest
+    env:
+      greeting: "Woof Woof Doggy"
     steps:
-      - name: Clone the Repo
-        id: Clone
-        uses: actions/checkout@v4
+      - name: First Dog Step
+        id: First
+        run: echo "${{env.greeting}} ${{env.owner}} ${{env.dog}}"
+        env:
+          owner: "Donald Duck"
 
-      - name: Run the ls commandS
-        id: Commands
-        run: echo $(ls -l)
+      - name: Second Dog Step
+        id: Second
+        run: echo "${{env.greeting}} ${{env.owner}} ${{env.cat}}"
+        env:
+          owner: "Micky Mouse"
 
       - name: Output based on the outcome of each step above
         run: |
-          outcomeEmoji() { case "$1" in 'success') echo '✅';; 'failure') echo '❌';; *) echo '❓';; esac; }
-          echo "Clone outcome: ${{steps.Clone.outcome}} - $(outcomeEmoji '${{ steps.Clone.outcome }}') Clone Step"
-          echo "ls -l outcome: ${{steps.Commands.outcome}} - $(outcomeEmoji '${{ steps.Commands.outcome }}') Command Step"
-
-          cat << EOL >> $GITHUB_STEP_SUMMARY
-          Push outcome material which into the GITHUB_STEP_SUMMARY
-          $(outcomeEmoji '${{ steps.Clone.outcome }}') Clone Step
-          $(outcomeEmoji '${{ steps.Commands.outcome }}') Command Step
-          Happy Days, Happy Coding
-          EOL
+          echo "First outcome: ${{steps.First.outcome}} "
+          echo "Second outcome: ${{steps.Second.outcome}} "
