@@ -2,26 +2,15 @@ name: env variables example
 on: workflow_dispatch
 env:
   dog: "Bowzer the Dog"
-  cat: "Black Panther"
 jobs:
   dog_job:
-    runs-on: ubuntu-latest
+    run_on: ubuntu-latest
     env:
       greeting: "Woof Woof Doggy"
     steps:
+      - name: Set environment local to the steps
+        env:
+          owner: "Local step dog owner"
       - name: First Dog Step
-        id: First
-        run: echo "${{env.greeting}} ${{env.owner}} ${{env.dog}}"
-        env:
-          owner: "Donald Duck"
+        run: echo "Local greeting: ${{env.greeting}}"
 
-      - name: Second Dog Step
-        id: Second
-        run: echo "${{env.greeting}} ${{env.owner}} ${{env.cat}}"
-        env:
-          owner: "Micky Mouse"
-
-      - name: Output based on the outcome of each step above
-        run: |
-          echo "First outcome: ${{steps.First.outcome}} "
-          echo "Second outcome: ${{steps.Second.outcome}} "
