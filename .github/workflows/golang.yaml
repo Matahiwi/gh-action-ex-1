@@ -10,4 +10,4 @@ jobs:
       - name: Echo out the environment variables
         run: echo "username $env.mongodb_username, password $env.mongodb_password"
       - name: Echo out secrets directly
-        run: "Name ${{ secrets.MONGODB_USERNAME }} password ${{ secrets.MONGODB_PASSWORD }}"
+        run: echo "Name ${{ secrets.MONGODB_USERNAME }} password ${{ secrets.MONGODB_PASSWORD }}"
