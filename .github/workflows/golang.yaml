@@ -9,6 +9,7 @@ jobs:
       greeting: "Woofy Woofy There" 
     steps:
       - name: "Define a step specific environment variable"
+        run: echo "Defining step specific environment variable" # each step requires either a run or uses to be valid
         env:
           owner: "First Dog Owner"
       - name: "First Dog Step"
