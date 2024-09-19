@@ -1,13 +1,27 @@
-name: Repository Secrets Demoe
+name: Environments and theyre variables and secrets
 on: workflow_dispatch
 jobs:
-  dog_job:                        
+  test_job:                        
     runs-on: ubuntu-latest
+    environment: Test
     env:
-      mongodb_username: ${{ secrets.MONGODB_USERNAME }}
-      mongodb_password: ${{ secrets.MONGODB_PASSWORD }}
+      username: ${{ vars.USERNAME }}
+      password: ${{ secrets.PASSWORD }}
     steps:
       - name: Echo out the environment variables
-        run: echo "username $env.mongodb_username, password $env.mongodb_password"
+        run: echo "username $env.username, password $env.password"
       - name: Echo out secrets directly
-        run: echo "Name ${{ secrets.MONGODB_USERNAME }} password ${{ secrets.MONGODB_PASSWORD }}"
+        run: echo "Name ${{ secrets.USERNAME }} password ${{ vars.PASSWORD }}"
+
+  prod_job:
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      username: ${{ vars.USERNAME }}
+      password: ${{ secrets.PASSWORD }}
+    steps:
+      - name: Echo out the environment variables
+        run: echo "username $env.username, password $env.password"
+      - name: Echo out secrets directly
+        run: echo "Name ${{ secrets.USERNAME }} password ${{ vars.PASSWORD }}"
+
