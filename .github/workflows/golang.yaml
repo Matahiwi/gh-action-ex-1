@@ -3,14 +3,10 @@ on: workflow_dispatch
 env:
   dog: "Bowzer the Dog"
 jobs:
-  dog_job:
-    run_on: ubuntu-latest
-    env:
-      greeting: "Woof Woof Doggy"
+  dog_job:                        
+    runs-on: ubuntu-latest
+    env:                           
+      greeting: "Woofy Woofy There" 
     steps:
-      - name: Set environment local to the steps
-        env:
-          owner: "Local step dog owner"
-      - name: First Dog Step
-        run: echo "Local greeting: ${{env.greeting}}"
-
+      - name: "First Dog Step"
+        run: echo "${{ env.greeting }} Your Pet is ${{ env.dog }}!"
