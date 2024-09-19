@@ -1,27 +1,16 @@
 name: Environments and theyre variables and secrets
 on: workflow_dispatch
 jobs:
-  test_job:                        
+  matrix_job:
+    strategy:
+      matrix:
+        value: [ Production, Test ]
     runs-on: ubuntu-latest
-    environment: Test
+    environment: ${{ matrix.value }}
     env:
       username: ${{ vars.USERNAME }}
-      password: ${{ secrets.PASSWORD }}
     steps:
       - name: Echo out the environment variables
-        run: echo "username $env.username, password $env.password"
+        run: echo "username from ${{matrix.value}} is $env.username"
       - name: Echo out secrets directly
-        run: echo "Name ${{ secrets.USERNAME }} password ${{ vars.PASSWORD }}"
-
-  prod_job:
-    runs-on: ubuntu-latest
-    environment: Production
-    env:
-      username: ${{ vars.USERNAME }}
-      password: ${{ secrets.PASSWORD }}
-    steps:
-      - name: Echo out the environment variables
-        run: echo "username $env.username, password $env.password"
-      - name: Echo out secrets directly
-        run: echo "Name ${{ secrets.USERNAME }} password ${{ vars.PASSWORD }}"
-
+        run: echo "Username from ${{matrix.value}} is  ${{ secrets.USERNAME }}"
