@@ -8,5 +8,8 @@ jobs:
     env:                           
       greeting: "Woofy Woofy There" 
     steps:
+      - name: "Define a step specific environment variable"
+        env:
+          owner: "First Dog Owner"
       - name: "First Dog Step"
-        run: echo "${{ env.greeting }} Your Pet is ${{ env.dog }}!"
+        run: echo "${{ env.greeting }} Owner is ${{env.owner}} Your Pet is ${{ env.dog }}!"
