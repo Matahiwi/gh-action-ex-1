@@ -4,10 +4,10 @@ jobs:
   dog_job:                        
     runs-on: ubuntu-latest
     env:
-      mongodb_username: ${{ vars.MONGODB_USERNAME }}
-      mongodb_password: ${{ vars.MONGODB_PASSWORD }}
+      mongodb_username: ${{ secrets.MONGODB_USERNAME }}
+      mongodb_password: ${{ secrets.MONGODB_PASSWORD }}
     steps:
       - name: Echo out the environment variables
         run: echo "username $env.mongodb_username, password $env.mongodb_password"
       - name: Echo out secrets directly
-        run: "Name ${{ vars.MONGODB_USERNAME }} password ${{ vars.MONGODB_PASSWORD }}
+        run: "Name ${{ secrets.MONGODB_USERNAME }} password ${{ secrets.MONGODB_PASSWORD }}
