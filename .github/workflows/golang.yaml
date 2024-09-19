@@ -1,16 +1,11 @@
-name: env variables example
+name: Repository Secrets Demoe
 on: workflow_dispatch
-env:
-  dog: "Bowzer the Dog"
 jobs:
   dog_job:                        
     runs-on: ubuntu-latest
-    env:                           
-      greeting: "Woofy Woofy There" 
+    env:
+      mongodb_username: ${{ vars.MONGODB_USERNAME }}
+      mongodb_password: ${{ vars.MONGODB_PASSWORD }}
     steps:
-      - name: "Define a step specific environment variable"
-        run: echo "Defining step specific environment variable" # each step requires either a run or uses to be valid
-        env:
-          owner: "First Dog Owner"
-      - name: "First Dog Step"
-        run: echo "${{ env.greeting }} Owner is ${{env.owner}} Your Pet is ${{ env.dog }}!"
+      - name: Echo out the environment variables
+        run: echo "username $env.mongodb_username, password $env.mongodb_password"
